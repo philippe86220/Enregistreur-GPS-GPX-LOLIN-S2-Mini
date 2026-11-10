@@ -52,7 +52,7 @@ Il enregistre la position toutes les 1,5 s dans des fichiers **GPX 1.1** sur car
 
 ## schéma
 
-![schéma](Schematic_GPS-Lolin_2026-11-06.pdf) 
+![schéma](Schematic_GPS-Lolin_2026-11-06.svg) 
 
 ---
 
