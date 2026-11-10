@@ -258,3 +258,4 @@ Le dernier dimanche est calculé par une formule arithmétique à partir de l'an
 
  **Philippe COSTES**    
  Auteur de la fonction`RTCete(...)`   @bricoleau https://forum.arduino.cc/t/trouver-date-et-heure-changement-heure-ete-hiver/1250041/21
+ Pour sa comprehension c'est ici : https://forum.arduino.cc/t/jour-de-la-semaine-en-fonction-de-yy-mm-dd/1284802
