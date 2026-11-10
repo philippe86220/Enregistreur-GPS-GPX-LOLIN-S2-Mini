@@ -83,7 +83,7 @@ INT2 (inv.) ──┤
 | État de GPIO 40   | Position de l'interrupteur	:      Mode          |
 | ----------------- | ----------------------------------------------- |
 | `HIGH` côté 3,3 V | **Transfert** : Wi-Fi activé, serveur web actif |
-| `LOW`   côté GND  | **GPS** : Wi-Fi coupé, enregistrement possible  |
+| `LOW`   côté GND  | **GPS** : Wi-Fi non activé, enregistrement possible  |
 
 ### GPS
 
