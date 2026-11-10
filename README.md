@@ -1,6 +1,6 @@
 # Enregistreur GPS → fichiers GPX (LOLIN S2 mini)
 
-Enregistreur de traces GPS autonome basé sur un **LOLIN (Wemos) S2 mini** (ESP32-S2) avec shield micro SD.
+Enregistreur de traces GPS autonome basé sur un **LOLIN (Wemos) S2 mini** (ESP32-S2) avec module pour carte micro SD.
 Il enregistre la position toutes les 1,5 s dans des fichiers **GPX 1.1** sur carte SD, affiche le chrono sur un écran OLED, et permet de **récupérer la dernière trace par Wi-Fi** grâce à un petit serveur web.
 
 ---
