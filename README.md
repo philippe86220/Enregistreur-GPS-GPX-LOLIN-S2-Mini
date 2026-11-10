@@ -148,7 +148,7 @@ Le programme est organisé autour d'une **machine à états** (`etatCourant`) :
 ### Boucle d'enregistrement (`EN_ATTENTE`)
 
 - **Bouton appuyé** (avec anti-rebond de 100 ms avant et après, et attente du relâchement) :
-  - si l'enregistrement est arrêté : choix d'un nom de fichier libre (`/trackNNN.gpx`), remise à zéro du chrono, écriture de l'en-tête GPX, `b_gpx_tracking = true` ;
+  - si l'enregistrement est arrêté : choix d'un nom de fichier libre (`/trackXXX.gpx`), remise à zéro du chrono, écriture de l'en-tête GPX, `b_gpx_tracking = true` ;
   - sinon : `b_gpx_tracking = false` (arrêt demandé).
 - **Toutes les 1,5 s** (si des données série GPS sont disponibles) :
   - si l'enregistrement est actif et la position mise à jour → mise à jour de l'écran et ajout d'un `<trkpt>` ;
