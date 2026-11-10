@@ -5,6 +5,15 @@ Il enregistre la position toutes les 1,5 s dans des fichiers **GPX 1.1** sur car
 
 ---
 
+## Quelques photos 
+
+![Photos](images/GPS1.JPG) 
+
+![Photos](images/GPS2.JPG) 
+
+![Photos](images/GPS3.JPG) 
+
+
 ## Fonctionnalités
 
 - Enregistrement des points GPS (latitude, longitude, altitude, heure, nombre de satellites, HDOP) dans un fichier `trackXXX.gpx`.
