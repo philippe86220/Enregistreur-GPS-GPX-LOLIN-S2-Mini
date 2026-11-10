@@ -143,7 +143,9 @@ Il est possible de relancer un nouvel enregistrement (nouveau fichier) sans red�
 
 Le programme est organisé autour d'une **machine à états** (`etatCourant`) :
 
+
 ![Machine à états du GPS](images/machine-etats.svg)
+
 
 | État          | Rôle                                                                                               |
 |:------------- | -------------------------------------------------------------------------------------------------- |
