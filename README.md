@@ -237,6 +237,7 @@ La fonction `RTCete()` détermine si la date UTC fournie par le GPS tombe en heu
 
 - passage à l'heure d'été : dernier dimanche de mars, 01h00 UTC ;
 - retour à l'heure d'hiver : dernier dimanche d'octobre, 01h00 UTC.
+- Le décalage horaire est calculé lors de l'obtention du fix GPS et reste constant pendant la session.
 
 Le dernier dimanche est calculé par une formule arithmétique à partir de l'année sur deux chiffres. La fonction renvoie `true` (été, décalage +2 h) ou `false` (hiver, +1 h), et le résultat est stocké dans la variable `heures`, ajoutée à l'heure UTC dans chaque `<time>`.
 
