@@ -5,23 +5,6 @@ Il enregistre la position toutes les 1,5 s dans des fichiers **GPX 1.1** sur car
 
 ---
 
-## Sommaire
-
-1. [Fonctionnalités](#fonctionnalités)
-2. [Matériel](#matériel)
-3. [Câblage et brochage](#câblage-et-brochage)
-4. [Bibliothèques nécessaires](#bibliothèques-nécessaires)
-5. [Utilisation](#Utilisation)
-6. [Fonctionnement du programme](#fonctionnement-du-programme)
-7. [Format des fichiers GPX](#format-des-fichiers-gpx)
-8. [Gestion de la rotation des fichiers](#gestion-de-la-rotation-des-fichiers)
-9. [Serveur web](#serveur-web)
-10. [Heure d'été / heure d'hiver](#heure-dété--heure-dhiver)
-11. [Référence des fonctions](#référence-des-fonctions)
-12. [Points d'attention et pistes d'amélioration](#points-dattention-et-pistes-damélioration)
-
----
-
 ## Fonctionnalités
 
 - Enregistrement des points GPS (latitude, longitude, altitude, heure, nombre de satellites, HDOP) dans un fichier `trackXXX.gpx`.
