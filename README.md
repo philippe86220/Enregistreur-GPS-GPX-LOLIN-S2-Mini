@@ -188,7 +188,7 @@ Chaque fichier respecte la structure GPX 1.1 :
 
 - `lat` / `lon` : 8 décimales.
 - `ele` : altitude en mètres.
-- `time` : date et heure construites à partir du GPS, **heure locale** (UTC + `heures`), voir les points d'attention.
+- `time` : date et heure construites à partir du GPS, **heure locale** (UTC + `heures`).
 - `sat` : nombre de satellites.
 - `hdop` : précision horizontale brute fournie par TinyGPSPlus (valeur ×100).
 
