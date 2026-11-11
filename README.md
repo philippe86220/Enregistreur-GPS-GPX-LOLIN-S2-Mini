@@ -205,16 +205,87 @@ Les points sont ajoutés un par un (ouverture en `FILE_APPEND`, écriture, ferme
 
 ---
 
-## Gestion de la rotation des fichiers
+## Gestion et rotation des fichiers GPX
 
-Pour éviter de saturer la carte SD, le nombre de fichiers est limité à `nbFichiersMax` (200) :
+L'enregistreur conserve un maximum de **200 fichiers GPX** sur la carte SD, numérotés de `track000.gpx` à `track199.gpx`.
 
-- Les fichiers sont numérotés `track000.gpx` → `track199.gpx`.
-- Quand le numéro 199 est atteint, le compteur repart à 0 et les fichiers les plus anciens sont supprimés avant d'être réécrits.
-- Un fichier **`/nb.txt`** contient le numéro du **dernier fichier enregistré**. Il sert de mémoire entre deux démarrages :
-  - absent → la limite de 200 n'a jamais été atteinte, on cherche le premier nom libre ;
-  - présent → la rotation est active (`nbAtteint = true`), le prochain fichier à supprimer est `(fileID + 1) % 200`.
-- En mode transfert, c'est ce numéro (ou le dernier fichier existant si `nb.txt` est absent) qui détermine la trace servie par le serveur web.
+Lorsque cette limite est atteinte, les nouveaux enregistrements remplacent progressivement les plus anciens selon un principe de **rotation circulaire**.
+
+### 1. Création des fichiers
+
+Sur une carte SD initialement vide, les fichiers sont créés successivement :
+
+`track000.gpx` → `track001.gpx` → ... → `track199.gpx`
+
+Chaque nouvel enregistrement utilise le premier numéro disponible.
+
+Tant que la limite de 200 fichiers n'est pas atteinte, aucun fichier GPX n'est supprimé.
+
+### 2. Rotation des fichiers
+
+Lorsque les 200 emplacements sont occupés, le prochain enregistrement entraîne :
+
+1. La suppression de `track000.gpx`, le plus ancien fichier.
+2. La création d'un nouveau `track000.gpx`.
+3. L'activation de la rotation circulaire.
+
+Les enregistrements suivants remplacent successivement :
+
+`track001.gpx` → `track002.gpx` → ... → `track199.gpx`
+
+Une fois `track199.gpx` remplacé, le programme revient à `track000.gpx`.
+
+**Le nombre de fichiers GPX présents sur la carte SD ne dépasse donc pas 200 dans les conditions normales d'utilisation.**
+
+### 3. Rôle du fichier `nb.txt`
+
+Le fichier `/nb.txt` permet de conserver le numéro du dernier enregistrement lorsque la rotation est active.
+
+Son fonctionnement est le suivant :
+
+- **Fichier absent :** le programme recherche le premier numéro GPX disponible.
+- **Fichier présent :** le programme lit le dernier numéro enregistré afin de poursuivre la rotation à partir de celui-ci.
+
+Le fichier `nb.txt` est créé lorsque la rotation devient active, puis actualisé à la fermeture de chaque nouvel enregistrement.
+
+Il permet ainsi de retrouver la position de la rotation après une coupure d'alimentation.
+
+### 4. Gestion des redémarrages
+
+L'enregistreur peut être éteint après chaque séance, puis redémarré ultérieurement.
+
+Deux situations sont prises en charge :
+
+**Avant la première rotation**
+
+Si `/nb.txt` n'existe pas, le programme parcourt les noms des fichiers GPX présents sur la carte SD pour trouver le premier emplacement disponible.
+
+Si les 200 fichiers existent déjà, il active automatiquement la rotation, supprime `track000.gpx` et réutilise ce numéro.
+
+**Après activation de la rotation**
+
+Si `/nb.txt` existe, le programme récupère le numéro du dernier fichier enregistré et détermine le prochain emplacement à réutiliser.
+
+La rotation peut ainsi se poursuivre après chaque redémarrage, sans intervention de l'utilisateur.
+
+---
+
+### 5. Transfert des fichiers
+
+En mode Wi-Fi, le programme détermine le dernier fichier GPX enregistré :
+
+- Si `/nb.txt` existe, son contenu indique directement le numéro du dernier fichier.
+- Sinon, le programme recherche le dernier fichier de la séquence initiale.
+
+Le fichier sélectionné est alors accessible depuis le serveur web de l'enregistreur.
+
+### Conditions d'utilisation
+
+Ce mécanisme suppose que les fichiers GPX sont conservés sur la carte SD sans suppression ou renommage individuel.
+
+Pour réinitialiser complètement la numérotation, il suffit de supprimer tous les fichiers `trackXXX.gpx` ainsi que le fichier `/nb.txt`.
+
+Au prochain démarrage, l'enregistrement reprend à `track000.gpx`.
 
 ---
 
