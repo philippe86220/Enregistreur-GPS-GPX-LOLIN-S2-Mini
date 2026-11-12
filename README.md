@@ -298,7 +298,146 @@ En mode transfert, la carte se connecte au Wi-Fi avec l'adresse IP statique et d
 | `http://IP_STATIQUE/`          | **Télécharge** la dernière trace (`Content-Disposition: attachment`)                                        |
 | `http://IP_STATIQUE/interpret` | Sert la trace en `text/xml` **sans** forcer le téléchargement (affichage ou traitement par une application) |
 
-La connexion Wi-Fi est bloquante : la carte attend `WL_CONNECTED` en boucle (test toutes les 500 ms).
+---
+
+## Fonction `initReseauWifi()` : Wi-Fi, IP statique et serveur web
+
+Cette fonction est appelée **une seule fois**, au démarrage, quand l'interrupteur est en position **transfert** (GPIO 40 au niveau haut). Elle choisit le fichier à servir (le dernier enregistré), connecte la carte au Wi-Fi, affiche l'état sur l'écran OLED et démarre le serveur web qui permet de récupérer la dernière trace GPX.
+
+---
+
+## 1. Où elle intervient dans le programme
+
+```cpp
+case TRANSFERT:
+  if (digitalRead(pinInterrupteur) == HIGH) {
+    initReseauWifi();
+    etatCourant = ARRET;      // la machine à états ne bouge plus ensuite
+  }
+```
+
+- Après l'appel, la machine passe en `ARRET` : le serveur tourne en tâche de fond (bibliothèque asynchrone) et `loop()` n'a plus rien à faire.
+- Pour quitter ce mode, on coupe l'alimentation et on remet l'interrupteur en position GPS.
+
+---
+
+## 2. Déroulement pas à pas
+
+### Étape 1 : choisir le fichier à servir
+
+```cpp
+if (isnNbTxt()) {
+  const char* s = fichierLePlusVieux_L();
+  fileID = s ? atoi(s) : 0;
+  sprintf(GPXFILE, "/track%03d.gpx", fileID);
+}
+else if (!isnNbTxt()) {
+  while (1) {
+    sprintf(GPXFILE, "/track%03d.gpx", fileID);
+    if (!SD.exists(GPXFILE)) break;
+    else fileID++;
+  }
+  sprintf(GPXFILE, "/track%03d.gpx", fileID - 1);
+}
+```
+
+| Situation | Fichier servi |
+|---|---|
+| `nb.txt` existe (rotation active) | le numéro lu dans `nb.txt`, c'est-à-dire le dernier fichier enregistré |
+| `nb.txt` n'existe pas (cycle 1) | le dernier fichier existant : on cherche le premier numéro libre, puis on recule de 1 |
+
+Le résultat est stocké dans `GPXFILE`, que les routes du serveur utilisent plus bas.
+
+### Étape 2 : configurer le Wi-Fi
+
+```cpp
+WiFi.persistent(false);
+WiFi.mode(WIFI_STA);
+bool ipStatiqueOK = WiFi.config(local_IP, gateway, subnet);
+WiFi.begin(ssid, password);
+```
+
+- **`WiFi.persistent(false)`** : empêche l'ESP32 d'écrire le nom du réseau et le mot de passe dans sa mémoire flash à chaque connexion.
+- **`WiFi.mode(WIFI_STA)`** : place la carte en mode station (voir le tableau plus bas).
+- **`WiFi.config(...)`** : demande une adresse IP fixe. Elle doit être appelée **avant** `WiFi.begin()`. Le résultat (`true` ou `false`) est mémorisé dans `ipStatiqueOK`.
+- **`WiFi.begin(...)`** : lance la connexion au réseau.
+
+### Étape 3 : attendre la connexion (20 s maximum)
+
+```cpp
+unsigned long debut = millis();
+while (WiFi.status() != WL_CONNECTED && millis() - debut < 20000) {
+  delay(500);
+}
+```
+
+La connexion prend quelques secondes. Sans cette attente, le test qui suit serait toujours négatif. La boucle s'arrête dès que la carte est connectée, ou au bout de 20 secondes.
+
+### Étape 4 : tester le résultat et afficher l'état
+
+| Écran | Signification |
+|---|---|
+| `WIFI...` | connexion en cours |
+| `WIFI KO` | pas de connexion après 20 s. La fonction se termine par `return` : **le serveur n'est pas démarré** |
+| `WIFI OK` + 3 adresses | connecté avec l'adresse statique demandée |
+| `IP STAT KO` + 3 adresses | connecté, mais `WiFi.config()` a échoué : la carte a reçu une adresse du DHCP |
+
+Les trois lignes d'adresses sont : l'adresse de la carte, la passerelle (la box) et le masque de sous-réseau.
+
+### Étape 5 : démarrer le serveur web
+
+```cpp
+server.on("/", HTTP_GET, [](AsyncWebServerRequest * request) {
+  request->send(SD, GPXFILE, "text/xml", true);
+});
+server.on("/interpret", HTTP_GET, [](AsyncWebServerRequest * request) {
+  request->send(SD, GPXFILE, "text/xml", false);
+});
+server.begin();
+```
+
+| Adresse | Comportement |
+|---|---|
+| `/` | télécharge le fichier (téléchargement forcé) |
+| `/interpret` | sert le fichier en texte, sans forcer le téléchargement |
+
+---
+
+## 3. Les modes Wi-Fi de l'ESP32
+
+| Mode | Rôle |
+|---|---|
+| `WIFI_STA` | **station** : la carte se connecte à votre box, comme un téléphone. C'est le mode utilisé ici |
+| `WIFI_AP` | point d'accès : la carte crée son propre réseau |
+| `WIFI_AP_STA` | les deux à la fois |
+| `WIFI_OFF` | Wi-Fi coupé |
+
+`WiFi.begin()` passe déjà la carte en mode station. La ligne `WiFi.mode(WIFI_STA)` rend simplement l'ordre explicite : le mode est réglé avant `WiFi.config()`. Elle est sans effet négatif.
+
+---
+
+## 4. L'affichage sur l'écran OLED
+
+L'écran fait 128 × 64 pixels.
+
+- **`setTextSize(2)`** : 12 pixels par caractère, donc **10 caractères par ligne** au maximum. Les messages doivent rester courts (`IP STAT KO` fait exactement 10 caractères).
+- **`setTextSize(1, 2)`** : caractères étroits (6 pixels) mais deux fois plus hauts (16 pixels). Une adresse comme `192.168.1.254` tient sur une ligne.
+- Quatre lignes de 16 pixels occupent les 64 pixels de l'écran, sans marge.
+- La taille est remise à 2 à la fin pour ne pas perturber les autres affichages.
+
+---
+
+## 5. Récupérer la trace
+
+1. Interrupteur en position transfert, puis mise sous tension.
+2. Attendre que l'écran affiche `WIFI OK` (ou `IP STAT KO`) avec l'adresse de la carte.
+3. Depuis l'ordinateur :
+
+```bash
+curl -o trace.gpx http://ADRESSE_DE_LA_CARTE/interpret
+```
+
+Utilisez l'adresse affichée à l'écran : c'est celle que la carte a réellement obtenue.
 
 ---
 
