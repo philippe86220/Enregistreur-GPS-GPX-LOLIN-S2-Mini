@@ -42,9 +42,24 @@ Il enregistre la position toutes les 1,5 s dans des fichiers **GPX 1.1** sur car
 
 ---
 
-## schéma
+## Schéma
 
 ![schéma](images/Schematic_GPS-Lolin_2026-11-06.png) 
+
+---
+
+## Fabrication des circuits imprimés
+
+Le dossier `GERBER` contient les fichiers de fabrication de deux versions du circuit imprimé réalisées en 2024.
+
+| Version | Dimensions |
+|---|---|
+| Février 2024 | 94,36 × 69,72 mm |
+| Mars 2024 | 90,17 × 61,60 mm |
+
+Les archives ZIP peuvent être transmises directement à un fabricant de circuits imprimés pour reproduire les PCB.
+
+Ces fichiers permettent de fabriquer les circuits nus. Les composants électroniques doivent ensuite être installés et soudés.
 
 ---
 
