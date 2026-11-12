@@ -201,7 +201,8 @@ Chaque fichier respecte la structure GPX 1.1 :
 - `sat` : nombre de satellites.
 - `hdop` : précision horizontale brute fournie par TinyGPSPlus (valeur ×100).
 
-Les points sont ajoutés un par un (ouverture en `FILE_APPEND`, écriture, fermeture), ce qui limite les pertes de données en cas de coupure d'alimentation (le fichier reste exploitable, seule la balise de fermeture manque).
+  
+Les points sont ajoutés un par un (ouverture en `FILE_APPEND`, écriture, fermeture), Cette méthode limite les pertes de données en cas de coupure d'alimentation. Toutefois, une interruption pendant l'enregistrement peut laisser le fichier GPX incomplet, notamment en raison de l'absence des balises XML de fermeture.
 
 ---
 
