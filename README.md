@@ -476,6 +476,22 @@ Le dernier dimanche est calculé par une formule arithmétique à partir de l'an
 
 ## Auteur
 
- **Philippe COSTES**    
+ **Philippe COSTES** (Philippe86220)  &rarr;
  Auteur de la fonction`RTCete(...)`   @bricoleau https://forum.arduino.cc/t/trouver-date-et-heure-changement-heure-ete-hiver/1250041/21  &rarr;
  pour sa comprehension c'est ici : https://forum.arduino.cc/t/jour-de-la-semaine-en-fonction-de-yy-mm-dd/1284802
+
+## Remerciements
+
+Un grand merci à **@j-m-l**, qui m'a accompagné dans mon apprentissage des bases du langage C++ et de nombreux autres concepts de programmation.
+
+En 2022, il m'a notamment guidé lors de la conception d'une première version de cet enregistreur GPS :
+
+[GPS avec création de fichiers GPX — version C-string](https://forum.arduino.cc/t/gps-avec-creation-de-fichiers-gpx-version-c-string/996413)
+
+Je tiens particulièrement à le remercier pour sa patience, sa disponibilité et ses grandes qualités pédagogiques.
+
+Mes remerciements vont également aux autres membres du forum Arduino francophone qui m'ont aidé à progresser au fil des années.
+
+Enfin, merci à **ChatGPT (OpenAI)** pour son accompagnement dans l'analyse du code, la résolution de problèmes techniques et l'aide apportée à la rédaction de cette documentation.
+
+ 
