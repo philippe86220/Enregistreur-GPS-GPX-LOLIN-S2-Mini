@@ -464,7 +464,7 @@ L'écran fait 128 × 64 pixels.
 
 1. Interrupteur en position transfert, puis mise sous tension.
 2. Attendre que l'écran affiche `WIFI OK` (ou `IP STAT KO`) avec l'adresse de la carte.
-3. Depuis l'ordinateur :
+3. Depuis l'ordinateur (sous Linux ou Mac) :
 
 ```bash
 curl -o trace.gpx http://ADRESSE_DE_LA_CARTE/interpret
