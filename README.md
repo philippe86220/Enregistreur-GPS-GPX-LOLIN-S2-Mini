@@ -266,23 +266,40 @@ Le fichier `nb.txt` est créé lorsque la rotation devient active, puis actualis
 
 Il permet ainsi de retrouver la position de la rotation après une coupure d'alimentation.
 
-### 4. Gestion des redémarrages
+## 4. Gestion des redémarrages
 
-L'enregistreur peut être éteint après chaque séance, puis redémarré ultérieurement.
+L'enregistreur peut être éteint après chaque séance, puis redémarré plus tard. La carte n'a pas de mémoire interne : c'est le fichier `/nb.txt` qui conserve l'état de la rotation.
 
-Deux situations sont prises en charge :
+### Avant la première rotation (pas de `/nb.txt`)
 
-**Avant la première rotation**
+- Le programme parcourt les noms `trackNNN.gpx` présents sur la carte et crée le premier numéro libre.
+- Si les 200 fichiers existent déjà, il active la rotation : il supprime `track000.gpx`, le recrée et passe `nbAtteint` à vrai.
+- À la fin de cette séance, `/nb.txt` est créé avec la valeur `0`.
 
-Si `/nb.txt` n'existe pas, le programme parcourt les noms des fichiers GPX présents sur la carte SD pour trouver le premier emplacement disponible.
+### Après activation de la rotation (`/nb.txt` existe)
 
-Si les 200 fichiers existent déjà, il active automatiquement la rotation, supprime `track000.gpx` et réutilise ce numéro.
+`/nb.txt` contient le numéro du **dernier fichier enregistré** (et non du plus ancien). Au démarrage, le programme relit ce numéro N. À chaque nouvelle séance :
 
-**Après activation de la rotation**
+1. Il supprime le fichier **N + 1** (modulo 200). Dans une rotation, c'est le plus ancien de la carte.
+2. Il le recrée et y enregistre la trace : la carte garde donc 200 fichiers.
+3. À l'arrêt de l'enregistrement avec le bouton, il écrit le nouveau numéro dans `/nb.txt`.
 
-Si `/nb.txt` existe, le programme récupère le numéro du dernier fichier enregistré et détermine le prochain emplacement à réutiliser.
+Exemple :
 
-La rotation peut ainsi se poursuivre après chaque redémarrage, sans intervention de l'utilisateur.
+| Étape | `nb.txt` | Fichier supprimé puis recréé |
+|---|---|---|
+| Séance suivante | 41 | track042 |
+| Séance suivante | 42 | track043 |
+| ... | ... | ... |
+| Séance quand `nb.txt` = 199 | 199, supprimé | track000 |
+| Fin de cette séance | 0 | |
+
+Quand N vaut 199, le programme supprime `/nb.txt`, repart à `track000.gpx`, puis réécrit `/nb.txt` avec `0` à la fin de la séance.
+
+### À retenir
+
+`/nb.txt` n'est mis à jour qu'à l'**arrêt de l'enregistrement par le bouton**, pas à la coupure de l'alimentation.
+
 
 ---
 
