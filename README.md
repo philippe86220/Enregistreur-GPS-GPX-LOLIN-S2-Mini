@@ -268,7 +268,7 @@ Il permet ainsi de retrouver la position de la rotation après une coupure d'ali
 
 ## 4. Gestion des redémarrages
 
-L'enregistreur peut être éteint après chaque séance, puis redémarré plus tard. C'est le fichier `/nb.txt` qui conserve l'état de la rotation.
+L'enregistreur peut être éteint après chaque séance, puis redémarré plus tard. C'est le fichier `/nb.txt` qui conserve l'état de la rotation lorsqu'elle est active.
 
 ### Avant la première rotation (pas de `/nb.txt`)
 
