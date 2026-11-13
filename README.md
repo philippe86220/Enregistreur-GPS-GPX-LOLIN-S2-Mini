@@ -272,15 +272,15 @@ L'enregistreur peut être éteint après chaque séance, puis redémarré plus t
 
 ### Avant la première rotation (pas de `/nb.txt`)
 
-- Le programme parcourt les noms `trackNNN.gpx` présents sur la carte et crée le premier numéro libre.
+- Le programme parcourt les noms `trackXXX.gpx` présents sur la carte et crée le premier numéro libre.
 - Si les 200 fichiers existent déjà, il active la rotation : il supprime `track000.gpx`, le recrée et passe `nbAtteint` à vrai.
 - À la fin de cette séance, `/nb.txt` est créé avec la valeur `0`.
 
 ### Après activation de la rotation (`/nb.txt` existe)
 
-`/nb.txt` contient le numéro du **dernier fichier enregistré** (et non du plus ancien). Au démarrage, le programme relit ce numéro N. À chaque nouvelle séance :
+`/nb.txt` contient le numéro du **dernier fichier enregistré** (et non du plus ancien). Au démarrage, le programme relit ce numéro X. À chaque nouvelle séance :
 
-1. Il supprime le fichier **N + 1** (modulo 200). Dans une rotation, c'est le plus ancien de la carte.
+1. Il supprime le fichier **X + 1** (modulo 200). Dans une rotation, c'est le plus ancien de la carte.
 2. Il le recrée et y enregistre la trace : la carte garde donc 200 fichiers.
 3. À l'arrêt de l'enregistrement avec le bouton, il écrit le nouveau numéro dans `/nb.txt`.
 
@@ -294,7 +294,7 @@ Exemple :
 | Séance quand `nb.txt` = 199 | 199, supprimé | track000 |
 | Fin de cette séance | 0 | |
 
-Quand N vaut 199, le programme supprime `/nb.txt`, repart à `track000.gpx`, puis réécrit `/nb.txt` avec `0` à la fin de la séance.
+Quand X vaut 199, le programme supprime `/nb.txt`, repart à `track000.gpx`, puis réécrit `/nb.txt` avec `0` à la fin de la séance.
 
 ### À retenir
 
