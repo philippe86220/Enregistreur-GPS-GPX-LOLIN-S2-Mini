@@ -143,7 +143,7 @@ Il est possible de relancer un nouvel enregistrement (nouveau fichier) sans red�
 
 3. La carte se connecte au Wi-Fi puis sert la dernière trace à l'adresse IP configurée (voir Serveur web). 
 
-4. Sous Linux ou Mac ouvrez un terminal et tapez :
+4. Sous Linux ou macOS ouvrez un terminal et tapez :
    `curl -o trace.gpx http://IP_STATIQUE/interpret`
 
 5. Vous retrouvez votre trace `GPX` dans votre dossier personnel sous le nom : `trace.gpx`. A chaque téléversement ce fichier est écrasé dans ce dossier.
@@ -464,7 +464,7 @@ L'écran fait 128 × 64 pixels.
 
 1. Interrupteur en position transfert, puis mise sous tension.
 2. Attendre que l'écran affiche `WIFI OK` (ou `IP STAT KO`) avec l'adresse de la carte.
-3. Depuis l'ordinateur (sous Linux ou Mac) :
+3. Depuis l'ordinateur (sous Linux ou macOS) :
 
 ```bash
 curl -o trace.gpx http://ADRESSE_DE_LA_CARTE/interpret
