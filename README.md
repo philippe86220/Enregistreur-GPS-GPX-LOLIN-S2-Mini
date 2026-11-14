@@ -465,19 +465,55 @@ L'écran fait 128 × 64 pixels.
 ## 5. Récupérer la trace
 
 1. Interrupteur en position transfert, puis mise sous tension.
-2. Attendre que l'écran affiche `WIFI OK` (ou `IP STAT KO`) avec l'adresse de la carte.
-3. Depuis l'ordinateur (sous Linux ou macOS) :
+2. Attendre que l'écran affiche `WIFI OK` (ou `IP STAT KO`) avec l'adresse IP de la carte.
+3. Récupérer le fichier GPX.
+
+### Depuis un terminal
+
+Les deux adresses permettent de récupérer **exactement le même fichier GPX**.
+
+L'option `-o` demande à `curl` d'enregistrer le fichier sous le nom `trace.gpx` dans le dossier courant.
+
+**Première possibilité :**
+
+```bash
+curl -o trace.gpx http://ADRESSE_DE_LA_CARTE/
+```
+
+**Deuxième possibilité :**
 
 ```bash
 curl -o trace.gpx http://ADRESSE_DE_LA_CARTE/interpret
 ```
-sous windows : 
-```bash
-curl.exe -o trace.gpx http://ADRESSE_DE_LA_CARTE/interpret
-```
 
+Les deux commandes produisent le même résultat : le fichier GPX est enregistré localement.
 
-Utilisez l'adresse affichée à l'écran : c'est celle que la carte a réellement obtenue.
+**Commandes selon le système d'exploitation :**
+
+| Système | Commande |
+|---|---|
+| Linux | `curl -o trace.gpx http://ADRESSE_DE_LA_CARTE/` |
+| macOS | `curl -o trace.gpx http://ADRESSE_DE_LA_CARTE/` |
+| Windows 10/11 | `curl.exe -o trace.gpx http://ADRESSE_DE_LA_CARTE/` |
+
+Sous Windows, l'utilisation de `curl.exe` permet notamment d'éviter toute confusion avec l'alias `curl` de certaines versions de PowerShell.
+
+### Depuis un navigateur
+
+Les deux adresses proposent des comportements différents :
+
+| Adresse | Résultat |
+|---|---|
+| `http://ADRESSE_DE_LA_CARTE/interpret` | Affiche le contenu XML du fichier GPX dans le navigateur, si celui-ci le permet. |
+| `http://ADRESSE_DE_LA_CARTE/` | Déclenche le téléchargement du fichier GPX, généralement dans le dossier Téléchargements. |
+
+**Remarque :** contrairement à un navigateur, `curl` n'utilise pas l'en-tête HTTP `Content-Disposition` pour décider automatiquement d'enregistrer le fichier. C'est l'option `-o` qui détermine son enregistrement.
+
+### Adresse IP à utiliser
+
+Dans tous les cas, utilisez **l'adresse IP affichée sur l'écran OLED** : c'est celle que la carte a réellement obtenue lors de sa connexion au réseau Wi-Fi.
+
+Si l'écran indique `IP STAT KO`, la connexion peut néanmoins être opérationnelle avec une adresse IP attribuée automatiquement par le routeur.
 
 ---
 
