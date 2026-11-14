@@ -167,7 +167,7 @@ Le programme est organisé autour d'une **machine à états** (`etatCourant`) :
 | `TRANSFERT`   | État initial : lit l'interrupteur et choisit le mode.                                              |
 | `ARRET`       | Mode transfert : le serveur tourne, plus rien à faire dans `loop()`.                               |
 | `NOFIX`       | Attend une première position GPS valide.                                                           |
-| `NB_FICHIERS` | Vérifie si `/nb.txt` existe (rotation déjà atteinte) et relit le numéro du fichier le plus ancien. |
+| `NB_FICHIERS` | Vérifie si /nb.txt existe et récupère le numéro du dernier fichier enregistré lorsque la rotation est active. |
 | `FIXSAT`      | Affiche « PRET !!! » dès le fix, calcule le décalage d'heure d'été (`heures`).                     |
 | `EN_ATTENTE`  | État permanent : gère le bouton, l'enregistrement des points et la fermeture du fichier.           |
 
