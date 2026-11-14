@@ -145,10 +145,12 @@ Il est possible de relancer un nouvel enregistrement (nouveau fichier) sans red�
 
 4. Sous Linux ou macOS ouvrez un terminal et tapez :
    `curl -o trace.gpx http://IP_STATIQUE/interpret`
+   sous windows :
+   `curl.exe -o trace.gpx http://ADRESSE_DE_LA_CARTE/interpret`
 
-5. Vous retrouvez votre trace `GPX` dans votre dossier personnel sous le nom : `trace.gpx`. A chaque téléversement ce fichier est écrasé dans ce dossier.
+6. Vous retrouvez votre trace `GPX` dans votre dossier personnel sous le nom : `trace.gpx`. A chaque téléversement ce fichier est écrasé dans ce dossier.
 
-6. Vous pouvez importer ce fichier dans une application de sport en ligne  comme : [https://www.decathloncoach.com/fr-fr/portal/feed]()
+7. Vous pouvez importer ce fichier dans une application de sport en ligne  comme : [https://www.decathloncoach.com/fr-fr/portal/feed]()
 
 ---
 
