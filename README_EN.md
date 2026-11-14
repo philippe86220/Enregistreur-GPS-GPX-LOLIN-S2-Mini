@@ -1,3 +1,5 @@
+🇫🇷 [Documentation française](README.md)
+
 # GPS Logger → GPX Files (LOLIN S2 mini)
 
 Standalone GPS track logger based on a **LOLIN (Wemos) S2 mini** (ESP32-S2) with a microSD card module.
