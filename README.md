@@ -144,7 +144,7 @@ Il est possible de relancer un nouvel enregistrement (nouveau fichier) sans red�
 3. La carte se connecte au Wi-Fi puis sert la dernière trace à l'adresse IP configurée (voir Serveur web). 
 
 4. Sous Linux ou macOS ouvrez un terminal et tapez :
-   `curl -o trace.gpx http://IP_STATIQUE/interpret`
+   `curl -o trace.gpx http://IP_STATIQUE/interpret`   
    sous windows :
    `curl.exe -o trace.gpx http://ADRESSE_DE_LA_CARTE/interpret`
 
