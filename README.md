@@ -268,7 +268,7 @@ Le fichier `nb.txt` est créé lorsque la rotation devient active, puis actualis
 
 Il permet ainsi de retrouver la position de la rotation après une coupure d'alimentation.
 
-## 4. Gestion des redémarrages
+### 4. Gestion des redémarrages
 
 L'enregistreur peut être éteint après chaque séance, puis redémarré plus tard. C'est le fichier `/nb.txt` qui conserve l'état de la rotation lorsqu'elle est active.
 
