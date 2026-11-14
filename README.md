@@ -471,6 +471,11 @@ L'écran fait 128 × 64 pixels.
 ```bash
 curl -o trace.gpx http://ADRESSE_DE_LA_CARTE/interpret
 ```
+sous windows : 
+```bash
+curl.exe -o trace.gpx http://ADRESSE_DE_LA_CARTE/interpret
+```
+
 
 Utilisez l'adresse affichée à l'écran : c'est celle que la carte a réellement obtenue.
 
