@@ -1,3 +1,5 @@
+🇬🇧 [English documentation](README_EN.md)
+
 # Enregistreur GPS → fichiers GPX (LOLIN S2 mini)
 
 Enregistreur de traces GPS autonome basé sur un **LOLIN (Wemos) S2 mini** (ESP32-S2) avec module pour carte micro SD.
